@@ -7,7 +7,7 @@ A simple React Book Management System built with functional components, hooks, F
 Add your deployed project URL here:
 
 ```text
-https://booknest-tejaswini-260526.netlify.app
+https://bookmanagesys.netlify.app
 ```
 
 ## Features
