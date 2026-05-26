@@ -1,17 +1,22 @@
-import BookItem from './BookItem.jsx';
+import BookItem from './BookItem'
 
-function BookList({ books, onEdit, onDelete }) {
+function BookList({ books, onDeleteBook, onEditBook }) {
   if (books.length === 0) {
-    return <p className="status">No books found.</p>;
+    return <p className="message">No books found.</p>
   }
 
   return (
-    <ul className="book-list">
+    <div className="book-list">
       {books.map((book) => (
-        <BookItem key={book.id} book={book} onEdit={onEdit} onDelete={onDelete} />
+        <BookItem
+          key={book.id}
+          book={book}
+          onDeleteBook={onDeleteBook}
+          onEditBook={onEditBook}
+        />
       ))}
-    </ul>
-  );
+    </div>
+  )
 }
 
-export default BookList;
+export default BookList
