@@ -16,23 +16,27 @@ A simple React-based Book Management System built with functional components, ho
 
 ```text
 Book-management-system/
-├── db.json
-├── index.html
-├── package.json
-├── README.md
-├── vite.config.js
-└── src/
-    ├── App.jsx
-    ├── main.jsx
-    ├── styles.css
-    ├── components/
-    │   ├── BookForm.jsx
-    │   ├── BookItem.jsx
-    │   ├── BookList.jsx
-    │   ├── GenreFilter.jsx
-    │   └── SearchBar.jsx
-    └── services/
-        └── bookApi.js
+|-- db.json
+|-- index.html
+|-- netlify.toml
+|-- package.json
+|-- README.md
+|-- vite.config.js
+|-- netlify/
+|   `-- functions/
+|       `-- books.js
+`-- src/
+    |-- App.jsx
+    |-- main.jsx
+    |-- styles.css
+    |-- components/
+    |   |-- BookForm.jsx
+    |   |-- BookItem.jsx
+    |   |-- BookList.jsx
+    |   |-- GenreFilter.jsx
+    |   `-- SearchBar.jsx
+    `-- services/
+        `-- bookApi.js
 ```
 
 ## Local Setup
@@ -87,10 +91,18 @@ PUT    /books/:id
 DELETE /books/:id
 ```
 
-The app reads the API URL from `VITE_API_URL` when provided. If no environment variable is set, it uses:
+The app reads the API URL from `VITE_API_URL` when provided.
+
+In local development, the default API URL is:
 
 ```text
 http://localhost:3001/books
+```
+
+In production, the default API URL is the Netlify API route:
+
+```text
+/api/books
 ```
 
 Optional `.env` example:
@@ -98,6 +110,8 @@ Optional `.env` example:
 ```env
 VITE_API_URL=http://localhost:3001/books
 ```
+
+On Netlify, `/api/books` is handled by the included Netlify Function at `netlify/functions/books.js`.
 
 ## Live Deployed URL
 
