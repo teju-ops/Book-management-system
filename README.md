@@ -1,6 +1,6 @@
 # Book Management System
 
-A simple React-based Book Management System built with functional components, hooks, and a mock REST API using JSON Server.
+A simple React-based Book Management System built with functional components, hooks, JSON Server for local development, and a Netlify Function mock API for deployment.
 
 ## Features
 
@@ -111,7 +111,7 @@ Optional `.env` example:
 VITE_API_URL=http://localhost:3001/books
 ```
 
-On Netlify, `/api/books` is handled by the included Netlify Function at `netlify/functions/books.js`.
+On Netlify, `/api/books` is handled by the included mock API Netlify Function at `netlify/functions/books.js`.
 
 ## Live Deployed URL
 

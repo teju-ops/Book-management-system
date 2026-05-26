@@ -1,9 +1,6 @@
-import { getStore } from '@netlify/blobs';
 import { randomUUID } from 'node:crypto';
 
-const STORE_KEY = 'all-books';
-
-const defaultBooks = [
+let books = [
   {
     id: '1',
     title: 'The Alchemist',
@@ -46,23 +43,11 @@ function getBookId(event) {
   return booksIndex >= 0 ? parts[booksIndex + 1] : null;
 }
 
-async function readBooks(store) {
-  const savedBooks = await store.get(STORE_KEY, { type: 'json' });
-  return savedBooks || defaultBooks;
-}
-
-async function saveBooks(store, books) {
-  await store.setJSON(STORE_KEY, books);
-}
-
 export async function handler(event) {
-  const store = getStore('book-management-system');
   const method = event.httpMethod;
   const id = getBookId(event);
 
   try {
-    const books = await readBooks(store);
-
     if (method === 'GET') {
       return response(200, id ? books.find((book) => book.id === id) || null : books);
     }
@@ -73,9 +58,8 @@ export async function handler(event) {
         ...bookData,
         id: randomUUID()
       };
-      const updatedBooks = [...books, newBook];
+      books = [...books, newBook];
 
-      await saveBooks(store, updatedBooks);
       return response(201, newBook);
     }
 
@@ -95,9 +79,8 @@ export async function handler(event) {
         ...bookData,
         id
       };
-      const updatedBooks = books.map((book) => (book.id === id ? updatedBook : book));
+      books = books.map((book) => (book.id === id ? updatedBook : book));
 
-      await saveBooks(store, updatedBooks);
       return response(200, updatedBook);
     }
 
@@ -106,8 +89,7 @@ export async function handler(event) {
         return response(400, { message: 'Book id is required.' });
       }
 
-      const updatedBooks = books.filter((book) => book.id !== id);
-      await saveBooks(store, updatedBooks);
+      books = books.filter((book) => book.id !== id);
 
       return {
         statusCode: 204,
